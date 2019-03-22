@@ -12,7 +12,7 @@ public class Movement : MonoBehaviour {
 
     void Start()
     {
-
+        animator.SetBool("DownIdle", true);
     }
     void Update () {
         Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0.0f);
@@ -21,11 +21,19 @@ public class Movement : MonoBehaviour {
         {
             animator.SetFloat("Vertical", 1);
             UpBool = true;
+            animator.SetBool("DownIdle", false);
+            animator.SetBool("RightIdle", false);
+            animator.SetBool("LeftIdle", false);
+            animator.SetBool("UpIdle", true);
         }
         else if (Input.GetKey("down")&& !UpBool)
         {
             animator.SetFloat("Vertical", -1);
             DownBool = true;
+            animator.SetBool("RightIdle", false);
+            animator.SetBool("LeftIdle", false);
+            animator.SetBool("UpIdle", false);
+            animator.SetBool("DownIdle", true);
         }
         else
         {
@@ -40,12 +48,21 @@ public class Movement : MonoBehaviour {
         {
             animator.SetFloat("Horizontal", -1);
             LeftBool = true;
+            animator.SetBool("DownIdle", false);
+            animator.SetBool("RightIdle", false);
+            animator.SetBool("UpIdle", false);
+            animator.SetBool("LeftIdle", true);
         }
         else if (Input.GetKey("right") && !LeftBool)
         {
             animator.SetFloat("Horizontal", 1);
             RightBool = true;
-        } else
+            animator.SetBool("UpIdle", false);
+            animator.SetBool("DownIdle", false);
+            animator.SetBool("LeftIdle", false);
+            animator.SetBool("RightIdle", true);
+        }
+        else
         {
             animator.SetFloat("Horizontal", 0);
             LeftBool = false;
@@ -66,6 +83,11 @@ public class Movement : MonoBehaviour {
 
 
         transform.position = transform.position + movement * Time.deltaTime;
+
+        if (Input.GetKeyDown("space")) 
+        {
+            animator.SetTrigger("SwordSwing");
+        }
 
 
 	}
