@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class Hurt : MonoBehaviour {
 
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.gameObject.tag == "quad")
-        {
-            Debug.Log("test:" + gameObject.name);
-        }
-    }
+    public Animator animator;
+    public GameObject Player;
+
+   
 }

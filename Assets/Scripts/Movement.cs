@@ -9,15 +9,17 @@ public class Movement : MonoBehaviour {
     public bool DownBool;
     public bool LeftBool;
     public bool RightBool;
+    public bool CanMove;
 
     void Start()
     {
         animator.SetBool("DownIdle", true);
+        CanMove = true;
     }
-    void Update () {
+    void Update() {
         Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0.0f);
-        
-        if (Input.GetKey("up") && !DownBool)
+
+        if (Input.GetKey("up") && !DownBool && CanMove && (!Input.GetKeyDown("space")))
         {
             animator.SetFloat("Vertical", 1);
             UpBool = true;
@@ -26,7 +28,7 @@ public class Movement : MonoBehaviour {
             animator.SetBool("LeftIdle", false);
             animator.SetBool("UpIdle", true);
         }
-        else if (Input.GetKey("down")&& !UpBool)
+        else if (Input.GetKey("down") && !UpBool && CanMove && (!Input.GetKeyDown("space")))
         {
             animator.SetFloat("Vertical", -1);
             DownBool = true;
@@ -42,9 +44,9 @@ public class Movement : MonoBehaviour {
             DownBool = false;
         }
 
-    
 
-        if (Input.GetKey("left") && !RightBool)
+
+        if (Input.GetKey("left") && !RightBool && CanMove && (!Input.GetKeyDown("space")))
         {
             animator.SetFloat("Horizontal", -1);
             LeftBool = true;
@@ -53,7 +55,7 @@ public class Movement : MonoBehaviour {
             animator.SetBool("UpIdle", false);
             animator.SetBool("LeftIdle", true);
         }
-        else if (Input.GetKey("right") && !LeftBool)
+        else if (Input.GetKey("right") && !LeftBool && CanMove && (!Input.GetKeyDown("space")))
         {
             animator.SetFloat("Horizontal", 1);
             RightBool = true;
@@ -84,11 +86,21 @@ public class Movement : MonoBehaviour {
 
         transform.position = transform.position + movement * Time.deltaTime;
 
-        if (Input.GetKeyDown("space")) 
+        if (Input.GetKeyDown("space"))
         {
+            CanMove = false;
             animator.SetTrigger("SwordSwing");
         }
 
+    }
 
-	}
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "quad")
+        {
+            
+            animator.SetTrigger("Damage");
+        }
+    }
 }
+
