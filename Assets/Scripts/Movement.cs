@@ -19,7 +19,7 @@ public class Movement : MonoBehaviour {
     void Update() {
         Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0.0f);
 
-        if (Input.GetKey("up") && !DownBool && CanMove && (!Input.GetKeyDown("space")))
+        if (Input.GetKey("up") && !DownBool && CanMove)
         {
             animator.SetFloat("Vertical", 1);
             UpBool = true;
@@ -28,7 +28,7 @@ public class Movement : MonoBehaviour {
             animator.SetBool("LeftIdle", false);
             animator.SetBool("UpIdle", true);
         }
-        else if (Input.GetKey("down") && !UpBool && CanMove && (!Input.GetKeyDown("space")))
+        else if (Input.GetKey("down") && !UpBool && CanMove)
         {
             animator.SetFloat("Vertical", -1);
             DownBool = true;
@@ -46,7 +46,7 @@ public class Movement : MonoBehaviour {
 
 
 
-        if (Input.GetKey("left") && !RightBool && CanMove && (!Input.GetKeyDown("space")))
+        if (Input.GetKey("left") && !RightBool && CanMove)
         {
             animator.SetFloat("Horizontal", -1);
             LeftBool = true;
@@ -55,7 +55,7 @@ public class Movement : MonoBehaviour {
             animator.SetBool("UpIdle", false);
             animator.SetBool("LeftIdle", true);
         }
-        else if (Input.GetKey("right") && !LeftBool && CanMove && (!Input.GetKeyDown("space")))
+        else if (Input.GetKey("right") && !LeftBool && CanMove)
         {
             animator.SetFloat("Horizontal", 1);
             RightBool = true;
@@ -88,7 +88,6 @@ public class Movement : MonoBehaviour {
 
         if (Input.GetKeyDown("space"))
         {
-            CanMove = false;
             animator.SetTrigger("SwordSwing");
         }
 
